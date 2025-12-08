@@ -1,0 +1,4 @@
+export const tasks = [
+  { id: 1, title: "Buy milk", done: false },
+  { id: 2, title: "Fix project", done: true },
+];

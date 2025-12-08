@@ -1453,16 +1453,16 @@ _XsfU4DiMeisfomLt7vGy53xadfWG3s5bXrlXMtPIU
 const assets = {
   "/index.mjs": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"14bda-1IBgs7Gnv/M59VM9cpxrrQ59+nI\"",
-    "mtime": "2025-12-08T11:04:18.587Z",
-    "size": 84954,
+    "etag": "\"14acf-4mBQ+ALVwK733vbEOl2y7OnKcUg\"",
+    "mtime": "2025-12-08T16:45:40.551Z",
+    "size": 84687,
     "path": "index.mjs"
   },
   "/index.mjs.map": {
     "type": "application/json",
-    "etag": "\"506d8-3uq910hyecr0zTMHl+dzQ8K8LYM\"",
-    "mtime": "2025-12-08T11:04:18.588Z",
-    "size": 329432,
+    "etag": "\"509cf-8zKthPIN8mN7huBFf8McEMaFYNo\"",
+    "mtime": "2025-12-08T16:45:40.552Z",
+    "size": 330191,
     "path": "index.mjs.map"
   }
 };
@@ -2070,7 +2070,7 @@ function defineRenderHandler(render) {
 
 const scheduledTasks = false;
 
-const tasks = {
+const tasks$1 = {
   
 };
 
@@ -2082,19 +2082,19 @@ async function runTask(name, {
   if (__runningTasks__[name]) {
     return __runningTasks__[name];
   }
-  if (!(name in tasks)) {
+  if (!(name in tasks$1)) {
     throw createError({
       message: `Task \`${name}\` is not available!`,
       statusCode: 404
     });
   }
-  if (!tasks[name].resolve) {
+  if (!tasks$1[name].resolve) {
     throw createError({
       message: `Task \`${name}\` is not implemented!`,
       statusCode: 501
     });
   }
-  const handler = await tasks[name].resolve();
+  const handler = await tasks$1[name].resolve();
   const taskEvent = { name, payload, context };
   __runningTasks__[name] = handler.run(taskEvent);
   try {
@@ -2129,7 +2129,7 @@ nitroApp.router.get(
   "/_nitro/tasks",
   defineEventHandler(async (event) => {
     const _tasks = await Promise.all(
-      Object.entries(tasks).map(async ([name, task]) => {
+      Object.entries(tasks$1).map(async ([name, task]) => {
         const _task = await task.resolve?.();
         return [name, { description: _task?.meta?.description }];
       })
@@ -2216,14 +2216,28 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: styles
 }, Symbol.toStringTag, { value: 'Module' }));
 
+const tasks = [
+  { id: 1, title: "Buy milk", done: false },
+  { id: 2, title: "Fix project", done: true }
+];
+
 const mark_post = defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const id = typeof body === "object" && body !== null ? body.id : void 0;
-  if (typeof id === "undefined") {
-    setResponseStatus(event, 400);
-    return { ok: false, error: "Missing `id` in request body" };
+  const id = body == null ? void 0 : body.id;
+  if (!id) {
+    return { ok: false, error: "Missing id" };
   }
-  return { ok: true, id };
+  const filteredTasks = tasks.find((x) => x.id === id);
+  if (!filteredTasks) {
+    return { ok: false, error: "Task not found" };
+  }
+  if (filteredTasks.done === true) {
+    filteredTasks.done = false;
+  } else {
+    filteredTasks.done = true;
+  }
+  console.log(`Task ${id} marked as done.`, filteredTasks);
+  return { ok: true, task: filteredTasks };
 });
 
 const mark_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -2232,10 +2246,6 @@ const mark_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePropert
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const tasks_get = defineEventHandler(() => {
-  const tasks = [
-    { id: 1, title: "Buy milk", done: false },
-    { id: 2, title: "Fix project", done: true }
-  ];
   return { ok: true, tasks };
 });
 

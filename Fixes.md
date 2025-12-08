@@ -27,9 +27,5 @@ This document lists the issues found and how they were resolved.
 - Clearer API response shapes (`{ ok: true/false, tasks?, error? }`)
 - Frontend resilient to network errors and shows messages
 - Added `FIXES.md` documenting the changes and how to test
-
-## How to run
-
-1. `npm install`
-2. `npm run dev`
-3. Visit the app (usually `http://localhost:3000`)
+- Now you can mark tasks Done or Pending
+- added a local db file

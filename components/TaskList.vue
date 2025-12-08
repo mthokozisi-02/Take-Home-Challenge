@@ -4,7 +4,8 @@
     <ul>
       <li v-for="t in tasks" :key="t.id">
         {{ t.title }} - {{ t.done ? "Done" : "Pending" }}
-        <button @click="mark(t.id)">Mark Done</button>
+        <button v-if="t.done == false" @click="mark(t.id)">Mark Done</button>
+        <button v-if="t.done == true" @click="mark(t.id)">Mark UnDone</button>
       </li>
     </ul>
   </div>
@@ -27,6 +28,7 @@ async function load() {
     // Expecting { ok: true, tasks: [...] }
     if (res && res.ok && Array.isArray(res.tasks)) {
       tasks.value = res.tasks;
+      console.log("Tasks loaded:", tasks.value);
     } else {
       throw new Error("Unexpected response from /api/tasks");
     }
@@ -52,6 +54,7 @@ async function mark(id) {
   } catch (err) {
     error.value = err?.message || String(err);
   }
+  await load();
 }
 
 load();
