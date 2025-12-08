@@ -1,1 +1,1 @@
-export { default } from "file:///C:/Users/mthok/Downloads/nuxt_broken_project/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
+export { default } from "file:///C:/_source/Take-Home-Challenge/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"

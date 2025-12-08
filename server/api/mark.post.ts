@@ -1,7 +1,5 @@
 import { defineEventHandler, readBody, setResponseStatus } from "h3";
 
-// Toggle the completed state for a task given an `id` in the request body.
-
 export default defineEventHandler(async (event) => {
   // read body
   const body = await readBody(event);
@@ -12,6 +10,6 @@ export default defineEventHandler(async (event) => {
     return { ok: false, error: "Missing `id` in request body" };
   }
 
-  // Since this example project with no DB, we simply respond OK
+  // Since this example project has no DB, we simply respond OK
   return { ok: true, id };
 });

@@ -1,7 +1,7 @@
 
 /// <reference path="app.config.d.ts" />
 /// <reference path="runtime-config.d.ts" />
-/// <reference types="C:/Users/mthok/Downloads/nuxt_broken_project/node_modules/@nuxt/nitro-server/dist/index.mjs" />
+/// <reference types="C:/_source/Take-Home-Challenge/node_modules/@nuxt/nitro-server/dist/index.mjs" />
 /// <reference path="nitro-middleware.d.ts" />
 /// <reference path="./schema.d.ts" />
 
